@@ -1,0 +1,34 @@
+Steps to deploy the project on AWS (ELASTIC BEAN):
+
+Point 1. Your main python file name should be application.py
+Point 2. Your flask object name, which we have defined in application.py should also be the application.
+Point 3. .ebignore  is responsible to hold the name of those files which we don't want to push on a cloud.
+Point 4. Create a requirements.txt file.
+        Command : pip freeze > requirements.txt
+Point 5. Create a folder called .ebextensions
+Point 6. Inside .ebextensions we need a python.config file.
+Point 7. Mention the commands in python.config
+            option_settings:
+              "aws:elasticbeanstalk:container:python":
+                WSGIPath: application:application
+
+
+Steps to deploy the project in Google   Cloud Platform:
+
+1. Create an app in GCP.
+2. Create a app.yaml file inside your project.
+   Add this code inside the file:
+   runtime: python
+   env: flex
+   entrypoint: gunicorn -b :$PORT main:application
+
+   runtime_config:
+     python_version: 3
+
+   manual_scaling:
+     instances: 1
+   resources:
+     cpu: 1
+     memory_gb: 0.5
+     disk_size_gb: 10
+
